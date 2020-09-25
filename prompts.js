@@ -1,3 +1,4 @@
+`use strict`;
 const managerQuestions = [{
         type: "input",
         name: "name",
@@ -47,3 +48,30 @@ const internQuestions = [{
         message: "What college did you graduate from?"
     }
 ];
+const engineerQuestions = [{
+        type: "input",
+        name: "name",
+        message: "Enter your name."
+    },
+    {
+        type: "input",
+        name: "email",
+        message: "Enter your email."
+    },
+    {
+        type: "input",
+        name: "ID",
+        message: "Enter your ID number."
+    },
+    {
+        type: "input",
+        name: "github",
+        message: "What is your GitHub username?"
+    }
+];
+
+module.exports = {
+    managerQuestions,
+    internQuestions,
+    engineerQuestions
+};
