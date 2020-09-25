@@ -1,6 +1,4 @@
-`use strict`;
-
-class employee {
+class Employee {
     constructor(name, ID, email) {
         this.name = name;
         this.ID = ID;
@@ -23,4 +21,4 @@ class employee {
         return "Employee";
     }
 }
-module.exports = employee;
+module.exports = Employee;
