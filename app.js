@@ -1,14 +1,14 @@
-const fs = require("fs");
+const Manager = require("./lib/Manager");
+const Engineer = require("./lib/Engineer");
+const Intern = require("./lib/Intern");
 const inquirer = require("inquirer");
-const employeeLib = require("./library/employee.js");
-const engineerLib = require("./library/engineer.js");
-const internLib = require("./library/intern.js");
-const managerLib = require("./library/manager.js");
-const managerTemp = require("./Templates/manager.thml");
-const internTemp = require("./Templates/intern.html");
-const engineerTemp = require("./Templates/engineer.html");
+const path = require("path");
+const fs = require("fs");
 
+const OUTPUT_DIR = path.resolve(__dirname, "output");
+const outputPath = path.join(OUTPUT_DIR, "team.html");
 
+const render = require("./lib/htmlRenderer");
 
 
 
@@ -84,11 +84,13 @@ const engineerQuestions = [{
 ];*/
 
 inquirer.prompt(prompts)
-    .then(function (data) {
-        fs.writeFile("index.html", JSON.stringify(data),
-            function (err) {
-                if (err) {
-                    return console.log(err);
-                }
-            })
-    });
+    .then(
+        app.get('../', function (req, res) {
+
+            var name = 'hello';
+
+            res.render(__dirname + "/views/layouts/main.html", {
+                name: name
+            });
+
+        }));
