@@ -1,22 +1,26 @@
 const fs = require("fs");
-
 const inquirer = require("inquirer");
+const employeeLib = require("./library/employee.js");
+const engineerLib = require("./library/engineer.js");
+const internLib = require("./library/intern.js");
+const managerLib = require("./library/manager.js");
+const managerTemp = require("./Templates/manager.thml");
+const internTemp = require("./Templates/intern.html");
+const engineerTemp = require("./Templates/engineer.html");
 
-const util = require("./library")
 
 
 
 
-
-inquirer.prompt = [{
+var prompts = [{
         type: "input",
         name: "name",
-        message: "Manager name?"
+        message: "Team Manager name?"
     },
     {
         type: "input",
         name: "managerEmail",
-        message: "Managers email?"
+        message: "Team Managers email?"
     },
     {
         type: "input",
@@ -29,14 +33,14 @@ inquirer.prompt = [{
         message: "Enter office number."
     },
     {
-        type: "input",
+        type: "list",
         name: "employee",
         message: "Who else are you adding to your team?",
         choices: ["Intern", "Engineer", "None"]
     }
 ];
 
-const internQuestions = [{
+/*const internQuestions = [{
         type: "input",
         name: "name",
         message: "Enter your name."
@@ -77,4 +81,14 @@ const engineerQuestions = [{
         name: "github",
         message: "What is your GitHub username?"
     }
-];
+];*/
+
+inquirer.prompt(prompts)
+    .then(function (data) {
+        fs.writeFile("index.html", JSON.stringify(data),
+            function (err) {
+                if (err) {
+                    return console.log(err);
+                }
+            })
+    });
