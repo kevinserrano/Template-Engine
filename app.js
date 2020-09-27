@@ -13,34 +13,36 @@ const render = require("./lib/htmlRenderer");
 
 
 var prompts = [{
+        type: "list",
+        name: "employee",
+        message: "Who are you adding to your team?",
+        choices: ["Manager", "Intern", "Engineer", "None"]
+    },
+    {
         type: "input",
         name: "name",
         message: "Team Manager name?"
     },
     {
         type: "input",
-        name: "managerEmail",
+        name: "email",
         message: "Team Managers email?"
     },
     {
         type: "input",
-        name: "ID",
+        name: "id",
         message: "Enter your ID number."
     },
     {
         type: "input",
         name: "OfficeNumber",
         message: "Enter office number."
-    },
-    {
-        type: "list",
-        name: "employee",
-        message: "Who else are you adding to your team?",
-        choices: ["Intern", "Engineer", "None"]
     }
+
 ];
 
-/*const internQuestions = [{
+
+const internQuestions = [{
         type: "input",
         name: "name",
         message: "Enter your name."
@@ -52,7 +54,7 @@ var prompts = [{
     },
     {
         type: "input",
-        name: "ID",
+        name: "id",
         message: "Enter your ID number."
     },
     {
@@ -73,7 +75,7 @@ const engineerQuestions = [{
     },
     {
         type: "input",
-        name: "ID",
+        name: "id",
         message: "Enter your ID number."
     },
     {
@@ -81,16 +83,21 @@ const engineerQuestions = [{
         name: "github",
         message: "What is your GitHub username?"
     }
-];*/
+];
 
-inquirer.prompt(prompts)
-    .then(
-        app.get('../', function (req, res) {
+function init() {
+    inquirer.prompt(prompts)
+        .then(function (data) {
+            if (data.choices === "Intern") {
+                prompt.internQuestions
+            } else if (data.choices === "Engineer") {
+                prompt.engineerQuestions
+            } else {
+                return console.log("nope")
+            }
+        });
+}
 
-            var name = 'hello';
 
-            res.render(__dirname + "/views/layouts/main.html", {
-                name: name
-            });
 
-        }));
+init();
