@@ -127,7 +127,7 @@ function intern() {
 function engineer() {
     inquirer.prompt(engineerQuestions)
         .then(function (data) {
-            const newEngineer = new Engineer(data.name, data.email, data.id, data.OfficeNumber)
+            const newEngineer = new Engineer(data.name, data.email, data.id, data.github)
             team.push(newEngineer)
             init()
         })
