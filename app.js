@@ -4,21 +4,21 @@ const Intern = require("./lib/Intern");
 const inquirer = require("inquirer");
 const path = require("path");
 const fs = require("fs");
-
+const team = [];
 const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
 
 
+const prompt = [{
+    type: "list",
+    name: "employee",
+    message: "Who are you adding to your team?",
+    choices: ["Manager", "Intern", "Engineer", "None"]
+}];
 
-var prompts = [{
-        type: "list",
-        name: "employee",
-        message: "Who are you adding to your team?",
-        choices: ["Manager", "Intern", "Engineer", "None"]
-    },
-    {
+const managerQuestions = [{
         type: "input",
         name: "name",
         message: "Team Manager name?"
@@ -86,18 +86,52 @@ const engineerQuestions = [{
 ];
 
 function init() {
-    inquirer.prompt(prompts)
+    inquirer.prompt(prompt)
         .then(function (data) {
-            if (data.choices === "Intern") {
-                prompt.internQuestions
-            } else if (data.choices === "Engineer") {
-                prompt.engineerQuestions
-            } else {
-                return console.log("nope")
+            switch (data.employee) {
+                case "Manager":
+                    manager()
+                    break;
+                case "Intern":
+                    intern()
+                    break;
+                case "Engineer":
+                    engineer()
+                    break;
+                case "None":
+                    render(team)
+                    break;
             }
         });
 }
 
+
+function manager() {
+    inquirer.prompt(managerQuestions)
+        .then(function (data) {
+            const newManager = new Manager(data.name, data.email, data.id, data.OfficeNumber)
+            team.push(newManager)
+            init()
+        })
+}
+
+function intern() {
+    inquirer.prompt(internQuestions)
+        .then(function (data) {
+            const newIntern = new Intern(data.name, data.email, data.id, data.school)
+            team.push(newIntern)
+            init()
+        })
+}
+
+function engineer() {
+    inquirer.prompt(engineerQuestions)
+        .then(function (data) {
+            const newEngineer = new Engineer(data.name, data.email, data.id, data.OfficeNumber)
+            team.push(newEngineer)
+            init()
+        })
+}
 
 
 init();
